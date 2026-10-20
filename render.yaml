@@ -1,0 +1,34 @@
+databases:
+  - name: demo-db
+    plan: free
+    databaseName: demo
+    user: demo
+
+services:
+  - type: web
+    name: demo-serveur
+    runtime: docker
+    plan: free
+    healthCheckPath: /actuator/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: demo-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: demo-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: demo-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: demo-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: demo-db
+          property: password
